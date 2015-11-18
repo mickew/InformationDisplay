@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.Framework.DependencyInjection;
 
@@ -20,6 +16,8 @@ namespace InfoDisplayWeb
         {
             // Add the platform handler to the request pipeline.
             app.UseIISPlatformHandler();
+            
+            app.UseStaticFiles();
 
             app.UseMvc();
 
