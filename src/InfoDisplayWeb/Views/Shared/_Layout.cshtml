@@ -7,19 +7,53 @@
         <title>@ViewData["Title"]  - Information Display</title>
         <environment names="Development">
             <link id="bootswatch" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
             <link rel="stylesheet" href="~/css/site.css" />
         </environment>
         <environment names="Staging,Production">
             <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
                   asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
                   asp-fallback-test-class="hidden" asp-fallback-test-property="visibility" asp-fallback-test-value="hidden" />
+
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+                  asp-fallback-href="~/lib/font-awesome/css/font-awesome.css"
+                  asp-fallback-test-class="fa" asp-fallback-test-property="display" asp-fallback-test-value="inline-block" />
+
             <link rel="stylesheet" href="~/css/site.min.css" />
         </environment>
         <link rel="shortcut icon" href="~/images/favicon.ico"/>
-</head>
+    </head>
     <body>
+        <!-- topbar starts -->
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                        <img alt="Information Display" src="~/images/logo20.png" class="hidden-xs" />
+                        <span>Information Display</span>
+                    </a>
+                    <!-- user dropdown -->
+                    @await Html.PartialAsync("_UserDropDown")
+                </div>
+            </div>
+        </div>
+        <!-- topbar ends -->
+        <!-- left menu -->
+        @await Html.PartialAsync("_MainMenu")
         <div class="container body-content">
-            @RenderBody()
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- Footer -->
+            @await Html.PartialAsync("_Footer")
         </div>
         <environment names="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>

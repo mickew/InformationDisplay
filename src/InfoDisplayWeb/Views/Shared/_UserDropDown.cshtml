@@ -1,0 +1,37 @@
+﻿@using System.Security.Claims
+<div class="btn-group navbar-right">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user"> </i>
+            <span class="hidden-sm hidden-xs"> @User.GetUserName()</span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a asp-controller="Account" asp-action="Manage">
+                    <i class="fa fa-user-md"></i>
+                    <span>
+                        Profile
+                    </span>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a asp-controller="Account" asp-action="LogOff">
+                    <i class="fa fa-sign-out"></i>
+                    <span>
+                        Logout
+                    </span>
+                </a>
+            </li>
+        </ul>
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Login" class="btn btn-default" role="button">
+            <i class="fa fa-sign-in"> </i>
+            <span class="hidden-sm hidden-xs"> Login</span>
+        </a>
+    }
+</div>

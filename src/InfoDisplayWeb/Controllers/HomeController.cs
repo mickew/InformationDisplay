@@ -16,6 +16,12 @@ namespace InfoDisplayWeb.Controllers
             return View();
         }
 
+        [Route("[action]")]
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         [Route("[action]")]
         public IActionResult Error()

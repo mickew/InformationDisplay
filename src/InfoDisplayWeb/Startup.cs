@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using InfoDisplayWeb.Models;
+using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Data.Entity;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +37,31 @@ namespace InfoDisplayWeb
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configure our application database context to be Entity Framework backed by SQL Server
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+
+            // Specify the configuration of our Application database context
+            services.Configure<ApplicationDbContextOptions>(options =>
+            {
+                options.DefaultUsername = Configuration["DefaultUser:Username"];
+                options.DefaultPassword = Configuration["DefaultUSer:Password"];
+            });
+
+            // Configure ASP.NET Identity to use our Identity-based application context
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => 
+                {
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonLetterOrDigit = false;
+                    options.Password.RequireUppercase = false;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddMvc();
         }
 
@@ -59,9 +87,10 @@ namespace InfoDisplayWeb
             app.UseIISPlatformHandler();
             
             app.UseStaticFiles();
+            app.UseIdentity();
 
             app.UseMvc();
-
+            ApplicationDbContext.InitializeDatabaseAsync(app.ApplicationServices).Wait();
         }
 
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);

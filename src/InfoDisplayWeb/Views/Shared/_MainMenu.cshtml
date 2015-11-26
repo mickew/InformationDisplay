@@ -1,0 +1,26 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <div class="navbar-collapse collapse">
+        <div class="main-menu">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a asp-controller="Home" asp-action="Dashboard">
+                        <i class="fa fa-home menu-icon"></i>
+                        <span class="menu-text">
+                            Dashboard
+                        </span>
+                    </a>
+
+                </li>
+                <li>
+                    <a asp-controller="Account">
+                        <i class="fa fa-users menu-icon"></i>
+                        <span class="menu-text">
+                            Manage users
+                        </span>
+                    </a>
+                 </li>
+            </ul>
+        </div>
+    </div>
+}
